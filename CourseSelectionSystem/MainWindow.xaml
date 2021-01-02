@@ -5,8 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseSelectionSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1300">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="420" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="550" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="650" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <Label Content="學生" FontWeight="Bold" FontSize="16" Margin="20,0,30,0" />
+            <ComboBox x:Name="cbStudent" Width="450" Height="24" RenderTransformOrigin="0.5,0.5"></ComboBox>
+        </StackPanel>
+        <TabControl Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
+            <TabItem>
+                <TabItem.Header>以教師分類課程</TabItem.Header>
+                <TreeView x:Name="trvTeacher" HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Width="534" Height="400" BorderThickness="0">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type local:Teacher}"
+                            ItemsSource="{Binding Courses}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="icons8-human-head-48.png" Width="20" Height="20"/>
+                                <TextBlock Text="{Binding TeacherName}" />
+                                <TextBlock Text="[" />
+                                <TextBlock Text="{Binding Courses.Count}" />
+                                <TextBlock Text="]" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type local:Course}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="icons8-book-48.png" Width="20" Height="20" />
+                                <TextBlock Text="{Binding CourseName}" />
+                                <TextBlock Text="{Binding OpeningClass}" />
+                                <TextBlock Text="(" />
+                                <TextBlock Text="{Binding Type}" />
+                                <TextBlock Text="{Binding Point}" />
+                                <TextBlock Text="學分" />
+                                <TextBlock Text=")" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>所有課程列表</TabItem.Header>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <CheckBox Content="必修" IsChecked="True" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <CheckBox Content="選修" IsChecked="True" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <Label Content="選擇學分數: " />
+                        <ComboBox x:Name="cbPoint" Width="80"></ComboBox>
+                    </StackPanel>
+                    <ListView x:Name="lvCourse" HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Width="534" Height="400"
+                          BorderThickness="0">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="授課教師" Width="60" DisplayMemberBinding="{Binding TeacherName}"/>
+                                <GridViewColumn Header="課程名稱" Width="110" DisplayMemberBinding="{Binding CourseName}" />
+                                <GridViewColumn Header="類型" Width="70" DisplayMemberBinding="{Binding Type}" />
+                                <GridViewColumn Header="學分數" Width="50" DisplayMemberBinding="{Binding Point}" />
+                                <GridViewColumn Header="開課班級" Width="140" DisplayMemberBinding="{Binding OpeningClass}" />
+                                <GridViewColumn Header="開課時間" Width="100" DisplayMemberBinding="{Binding ClassTime}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

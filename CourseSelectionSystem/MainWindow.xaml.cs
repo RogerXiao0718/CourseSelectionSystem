@@ -24,19 +24,65 @@ namespace CourseSelectionSystem
 
         ObservableCollection<Student> students = new ObservableCollection<Student>();
         ObservableCollection<Teacher> teachers = new ObservableCollection<Teacher>();
+        ObservableCollection<Course> courses = new ObservableCollection<Course>();
  
         public MainWindow()
         {
             InitializeComponent();
-            using (var reader = new StreamReader(@"D:\大二視窗應用程式\course_selection_data\2B.csv", Encoding.Default))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            LoadStudents();
+            LoadCourses();
+            PopulateTeachers();
+        }
+
+        private void PopulateTeachers()
+        {
+            foreach (var courseGroup in courses.GroupBy(course => course.TeacherName))
             {
-                var records = csv.GetRecords<Student>();
-                foreach(Student record in records)
+                Teacher teacher = new Teacher();
+                teacher.TeacherName = courseGroup.ToList()[0].TeacherName;
+                foreach (var course in courseGroup)
                 {
-                    students.Add(record);
+                    teacher.Courses.Add(course);
+                    course.Tutor = teacher;
+                }
+                teachers.Add(teacher);
+            }
+            trvTeacher.ItemsSource = teachers;
+        }
+
+        private void LoadCourses()
+        {
+            using (StreamReader reader = new StreamReader("D:\\大二視窗應用程式\\course_selection_data\\course.csv", Encoding.Default))
+            {
+                using (CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    csv.Configuration.HeaderValidated = null;
+                    var records = csv.GetRecords<CourseRecord>();
+
+                    foreach (CourseRecord record in records)
+                    {
+                        courses.Add(new Course(record));
+                    }
+                }
+
+            }
+            lvCourse.ItemsSource = courses;
+        }
+
+        private void LoadStudents()
+        {
+            using (StreamReader reader = new StreamReader(@"D:\大二視窗應用程式\course_selection_data\2B.csv", Encoding.Default)) {
+                using (CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var records = csv.GetRecords<Student>();
+                    foreach (Student record in records)
+                    {
+                        students.Add(record);
+                    }
                 }
             }
+            
+            cbStudent.ItemsSource = students;
         }
     }
 }
