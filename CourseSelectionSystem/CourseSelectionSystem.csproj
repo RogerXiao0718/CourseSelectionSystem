@@ -117,5 +117,14 @@
   <ItemGroup>
     <Resource Include="icons8-book-48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="right-arrow-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="left-arrow-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="save-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

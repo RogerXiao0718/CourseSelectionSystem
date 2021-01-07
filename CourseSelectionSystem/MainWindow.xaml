@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseSelectionSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1300">
+        Title="MainWindow" Height="600" Width="1350">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -19,13 +19,13 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
             <Label Content="學生" FontWeight="Bold" FontSize="16" Margin="20,0,30,0" />
-            <ComboBox x:Name="cbStudent" Width="450" Height="24" RenderTransformOrigin="0.5,0.5"></ComboBox>
+            <ComboBox x:Name="cbStudent" Width="450" Height="24" RenderTransformOrigin="0.5,0.5" SelectionChanged="cbStudent_SelectionChanged"></ComboBox>
         </StackPanel>
         <TabControl Grid.Row="1" Grid.Column="0" Margin="5,0,0,0">
             <TabItem>
                 <TabItem.Header>以教師分類課程</TabItem.Header>
                 <TreeView x:Name="trvTeacher" HorizontalAlignment="Left"
-                          VerticalAlignment="Top" Width="534" Height="400" BorderThickness="0">
+                          VerticalAlignment="Top" Width="534" Height="400" BorderThickness="0" SelectedItemChanged="trvTeacher_SelectedItemChanged">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type local:Teacher}"
                             ItemsSource="{Binding Courses}">
@@ -63,7 +63,7 @@
                     </StackPanel>
                     <ListView x:Name="lvCourse" HorizontalAlignment="Left"
                           VerticalAlignment="Top" Width="534" Height="400"
-                          BorderThickness="0">
+                          BorderThickness="0" SelectionChanged="lvCourse_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="授課教師" Width="60" DisplayMemberBinding="{Binding TeacherName}"/>
@@ -78,5 +78,29 @@
                 </StackPanel>
             </TabItem>
         </TabControl>
+        <Button x:Name="selectButton" Grid.Column="1"  Margin="9.6,38,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="60" BorderThickness="0" Background="{x:Null}" Click="selectButton_Click">
+            <Image Width="50" Height="50" Source="right-arrow-icon.png"  />
+        </Button>
+        <Button  Grid.Column="1"  Margin="9.6,202,0,0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Width="60" Height="60" BorderThickness="0" Background="{x:Null}">
+            <Image Width="50" Height="50" Source="left-arrow-icon.png" />
+        </Button>
+        <Button  Grid.Column="1" Margin="9.6,353,0,0" Grid.Row="1" VerticalAlignment="Top" Width="60" Height="60" BorderThickness="0" HorizontalAlignment="Center" Background="{x:Null}">
+            <Image Width="50" Height="50" Source="save-icon.png" />
+        </Button>
+        <ListView x:Name="lvRecord" Grid.Row="1" Grid.Column="1" Margin="99.8,0,-31.6,0" Grid.ColumnSpan="2" Height="420" VerticalAlignment="Top">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="學號" Width="80" DisplayMemberBinding="{Binding SelectedStudent.ID}"/>
+                    <GridViewColumn Header="學生姓名" Width="60" DisplayMemberBinding="{Binding SelectedStudent.Name}" />
+                    <GridViewColumn Header="授課老師" Width="60" DisplayMemberBinding="{Binding SelectedTeacher.TeacherName}" />
+                    <GridViewColumn Header="科目名稱" Width="140" DisplayMemberBinding="{Binding SelectedCourse.CourseName}" />
+                    <GridViewColumn Header="必選修" Width="60" DisplayMemberBinding="{Binding SelectedCourse.Type}" />
+                    <GridViewColumn Header="學分數" Width="50" DisplayMemberBinding="{Binding SelectedCourse.Point}" />
+                    <GridViewColumn Header="開課班級" Width="120" DisplayMemberBinding="{Binding SelectedCourse.OpeningClass}" />
+                    <GridViewColumn Header="開課時間" Width="80" DisplayMemberBinding="{Binding SelectedCourse.ClassTime}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label x:Name="statusLabel" Content="" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" />
     </Grid>
 </Window>

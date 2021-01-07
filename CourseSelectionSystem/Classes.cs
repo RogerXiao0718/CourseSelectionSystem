@@ -89,5 +89,6 @@ namespace CourseSelectionSystem
     {
         public Teacher SelectedTeacher { get; set; }
         public Course SelectedCourse { get; set; }
+        public Student SelectedStudent { get; set; }
     }
 }
