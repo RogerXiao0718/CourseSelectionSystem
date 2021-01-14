@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 
 namespace CourseSelectionSystem
@@ -40,6 +35,11 @@ namespace CourseSelectionSystem
         [Ignore()]
         public Teacher Tutor { get; set; }
 
+        public Course()
+        {
+
+        }
+
         public Course(CourseRecord record)
         {
             this.TeacherName = record.TeacherName;
@@ -49,10 +49,7 @@ namespace CourseSelectionSystem
             this.OpeningClass = record.OpeningClass;
             this.ClassTime = record.ClassTime;
         }
-        public Course()
-        {
 
-        }
         public Course(Teacher tutor)
         {
             this.Tutor = tutor;

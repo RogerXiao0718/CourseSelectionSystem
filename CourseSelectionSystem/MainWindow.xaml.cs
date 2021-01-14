@@ -26,8 +26,6 @@ namespace CourseSelectionSystem
         bool electiveChecked = true;
         bool deptElectiveChecked = true;
 
-
-
         public MainWindow()
         {
             InitializeComponent();
@@ -285,8 +283,6 @@ namespace CourseSelectionSystem
                     csv.WriteRecords(results);
                 }
             }
-        }
-
-        
+        }      
     }
 }
